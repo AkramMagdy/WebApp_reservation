@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Reservation";
+
+}
+@model ReservationHotelOnline.Models.DataModel.Reservation
+
+<script src="~/Scripts/Jquery-2.2.4.js"></script>
+
+<h2 style="background-color:chartreuse;padding:10px;color:white">Reservation Hotel Online</h2>
+
+
+<div class="container">
+    <div class="col-lg-10">
+        <div class="master">
+        </div>
+        <div class="details">
+            <table class="table table-responsive">
+                <tr>
+                    <td>Room Type</td>
+                    <td>Room Name</td>
+                    <td>Unit Price</td>
+                    <td>from</td>
+                    <td>To</td>
+                    <td>No.days</td>
+                    <td>Price</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="mycontainer" id="mainrow">
+                    <td>
+                        <select id="RoomType" class="pc form-control" onchange="LoadRooms(this),LoadPrice(this)" style="width:160px">
+                            <option>Select Room Type</option>
+                        </select>
+                        <span class="error">you must select room type</span>
+                    </td>
+                    <td>
+                        <select id="RoomName" class="RoomName form-control" style="width:140px">
+                            <option>Select Room </option>
+                        </select>
+                        <span class="error">you must select room </span>
+                    </td>
+                    <td>
+                        <input type="text" id="UnitPrice" class="UnitPrice form-control" style="width:50px" 
+                               />
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "StartDate form-control", @id = "StartDate" } })
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                        @*<input type="text" id="StartDate" class="StartDate form-control" />*@
+                        <span class="error">you must write Start Date </span>
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "EndDate form-control", @id = "EndDate", @onchange = "OnchangeEndDate()" } })
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                        @*<input type="text" id="EndDate" class="EndDate form-control" onchange="OnchangeEndDate()" />*@
+                        <span class="error">you must write End Date </span>
+                    </td>
+                    @* Note :onmouseover On Nodays text metod onNodaysChanged() calculate the price*@
+                    <td>
+                        <input type="text" id="Nodays" class="Nodays form-control" onmouseover="onNodaysChanged()" style="width:70px" />
+
+                    </td>
+                    <td>
+                        <input type="text" id="Price" class="Price form-control" />
+                    </td>
+
+                    <td>
+                        <input type="button" id="add" value=" Reserve" style="width:80px" class="btn btn-primary glyphicon glyphicon-plus" />
+                    </td>
+                </tr>
+            </table>
+            <div id="orderItems">
+                <table class="table table-responsive" id="ReservationDetails">
+                    <tbody></tbody>
+                </table>
+                <span id="orderItemError" style="color:red"></span>
+            </div>
+            <div style="padding:10px 0; text-align:right">
+                <input id="submit" type="button" value="Confirm" class="btn btn-warning " style="padding:10px 20px" />
+              
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+@Html.ActionLink("Cancel", "Index", "Home", new { }, new { @class = "btn btn-danger col-md-3 ", @dir = "ltr" })
+
+@*datepicker javascript Method*@
+<script type="text/javascript">
+    $(function () {
+        $('#StartDate').datepicker({
+            dateFormat: 'mm-dd-yy'
+        })
+        $('#EndDate').datepicker({
+            dateFormat: 'mm-dd-yy'
+        })
+
+    })
+</script>
+
+@*style for validation to be hidden ,red color when be visible*@
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+        font-weight: bold;
+    }
+
+    /*stye for error massage color*/
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+
+
+
+
+
+
+
+
+
